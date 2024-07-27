@@ -4,7 +4,7 @@ const knightsRoutes = require('./knightsRoutes')
 const router = express.Router()
 
 router.get('/', (req, res) => {
-  res.send('API Home');
+  res.send('Knights Challenge');
 });
 
 // Rotas de usuários

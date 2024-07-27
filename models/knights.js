@@ -15,8 +15,10 @@ const knightSchema = new mongoose.Schema({
   weapons: [{
     name: {type: String, required:true},
     mod: {type: Number, required: true},
-    attr: {type: String, required: true}
+    attr: {type: String, required: true},
+    equipped: {type: Boolean, required: true}
   }],
+  deletedAt: {type: Date},
   attributes: {
     strength: {type: Number, required: true},
     dexterity: {type: Number, required: true},
@@ -24,7 +26,8 @@ const knightSchema = new mongoose.Schema({
     intelligence: {type: Number, required: true},
     wisdom: {type: Number, required: true},
     charisma: {type: Number, required: true}
-  }
+  },
+  keyAttribute: {type: String, required: true}
 }, {
   timestamps: true
 });
