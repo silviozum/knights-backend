@@ -27,7 +27,8 @@ const knightSchema = new mongoose.Schema({
     wisdom: {type: Number, required: true},
     charisma: {type: Number, required: true}
   },
-  keyAttribute: {type: String, required: true}
+  keyAttribute: {type: String, required: true},
+  image: {type: String}
 }, {
   timestamps: true
 });

@@ -1,11 +1,12 @@
 const { redisClient } = require('../config')
 const knightsRepository = require('../repositories/knightsRepository')
 const { createQueryByFilters } = require('../utils/filter')
-const { calculateAge } = require('../utils/calculateAge')
+const { formatedKnight } = require('../utils/formatedKnight')
 
 async function createKnights (knight) {
+  const results = await knightsRepository.create(knight)
   await redisClient.flushDb()
-  return await knightsRepository.create(knight)
+  return formatedKnight(results)
 }
 
 async function editKnights (data, id) {
@@ -33,24 +34,17 @@ async function getAllKnight (filters) {
   const query = createQueryByFilters(filters)
   const result = await knightsRepository.find(query, cacheKey)
 
-  const formated = result.map((item) => {
-    const age = calculateAge(item.createdAt)
-    return {
-      name: item.name,
-      age: age,
-      weapons: item.weapons.length,
-      attribute: item.keyAttribute,
-      attack: 'wip',
-      exp: Math.floor((age - 7) * Math.pow(22, 1.45))
-    }
+  resultFormated = []
+
+  result.forEach(knight => {
+    resultFormated.push(formatedKnight(knight))
   })
 
-  console.log(formated)
-    // set cache
-  await redisClient.set(cacheKey, JSON.stringify(formated), {
+  // set cache
+  await redisClient.set(cacheKey, JSON.stringify(resultFormated), {
     EX: 3600
   })
-  return formated
+  return resultFormated
 }
 
 module.exports = {

@@ -1,17 +1,6 @@
 const knightsService = require('../services/knightsService')
 
 async function createKnights(req, res) {
-    // validate attributes
-    const { attributes } = req.body;
-    if (attributes) {
-        const hasAttributesValues = Object.values(attributes).some(value => value > 0)
-        if (hasAttributesValues) {
-            return res.status(400).send({ error: 'Initial knights attributes must be greater than 0' })
-        }
-    } else {
-        return res.status(400).send({ error: 'Attributes are required' })
-    }
-
     try {
         const knight = await knightsService.createKnights(req.body)
         res.status(201).send(knight)
