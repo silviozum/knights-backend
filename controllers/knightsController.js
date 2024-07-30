@@ -23,7 +23,6 @@ async function editKnight(req, res) {
 
 async function deleteKnight(req, res) {
     const data = {heroe: true, deletedAt: new Date()}
-    console.log(data)
     try {
         const deleted = await knightsService.editKnights(data, req.params.id)
         res.status(201).send(deleted)
