@@ -24,15 +24,15 @@ async function getKnight (id) {
 
 async function getAllKnight (filters) {
   // cache validate
-  const cacheKey = filters ? `kinightsKey - ${filters}` : 'kinightsKey - nofilter'
+  const cacheKey = filters ? `kinightsKey - ${filters}` : 'kinightsKey - default'
   const cachedData = await redisClient.get(cacheKey)
   if (cachedData) {
     console.log('cached! 🛢️🛢️')
     return JSON.parse(cachedData)
   }
-  // filter query
+ 
   const query = createQueryByFilters(filters)
-  const result = await knightsRepository.find(query, cacheKey)
+  const result = await knightsRepository.find(query)
 
   resultFormated = []
 
@@ -40,7 +40,6 @@ async function getAllKnight (filters) {
     resultFormated.push(formatedKnight(knight))
   })
 
-  // set cache
   await redisClient.set(cacheKey, JSON.stringify(resultFormated), {
     EX: 3600
   })
