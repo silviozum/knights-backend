@@ -13,7 +13,7 @@
 
 ### Passos
 
-1. Adicione HOST e PORT no env para Mongo e Redis:
+1. Adicione HOST e PORT no arquivo .env para Mongo e Redis:
 
     ```bash
     MONGODB_HOST=mongodb://127.0.0.1:27017/knights
